@@ -15,6 +15,9 @@ function ProductList() {
             <span>{totalCount}</span>
           </Link>
         </div>
+        <Link to="/add-product" className="add-link">
+          + Yeni Məhsul
+        </Link>
       </header>
 
       <div id="products_div" className="products">

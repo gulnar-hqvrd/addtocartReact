@@ -1,17 +1,36 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import productsData from "../data/products.json";
+import axios from "axios";
 
 const CartContext = createContext();
+const BASE_URL = "http://localhost:3000";
 
 export const CartProvider = ({ children }) => {
-  const [products, setProducts] = useState(productsData);
+  const [products, setProducts] = useState([]);
   const [cart, setCart] = useState(() => {
     return JSON.parse(localStorage.getItem("cart")) || [];
   });
 
+
+  useEffect(() => {
+    axios.get(`${BASE_URL}/products`)
+      .then(res => setProducts(res.data))
+      .catch(err => console.log(err));
+  }, []);
+
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
+
+
+  const addNewProduct = async (newProduct) => {
+    try {
+      const res = await axios.post(`${BASE_URL}/products`, newProduct);
+      setProducts((prev) => [...prev, res.data]);
+      alert("Əlavə olundu");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const addToCart = (product) => {
     setCart((a) => {
@@ -27,12 +46,12 @@ export const CartProvider = ({ children }) => {
           }
           return item;
         });
-      }
-      else {
+      } else {
         return [...a, { ...product, count: 1 }];
       }
     });
   };
+
 
   const removeFromCart = (id) => {
     setCart((a) => a.filter((item) => item.id !== id));
@@ -68,6 +87,7 @@ export const CartProvider = ({ children }) => {
         changeCount,
         totalPrice,
         totalCount,
+        addNewProduct,
       }}
     >
       {children}

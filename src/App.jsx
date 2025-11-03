@@ -1,19 +1,16 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { CartProvider } from "./context/CartContext";
+import { Routes, Route } from "react-router-dom";
 import ProductList from "./pages/ProductList";
 import Checkout from "./pages/Checkout";
+import AddProduct from "./pages/AddProduct";
 
 function App() {
   return (
-    <CartProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<ProductList />} />
-          <Route path="/checkout" element={<Checkout />} />
-        </Routes>
-      </Router>
-    </CartProvider>
+    <Routes>
+      <Route path="/" element={<ProductList />} />
+      <Route path="/checkout" element={<Checkout />} />
+      <Route path="/add-product" element={<AddProduct />} />
+    </Routes>
   );
 }
 
