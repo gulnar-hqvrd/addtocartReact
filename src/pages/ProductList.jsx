@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 
 function ProductList() {
-  let { products, totalCount } = useCart();
+  const { products, totalCount } = useCart();
 
   return (
     <div className="container">

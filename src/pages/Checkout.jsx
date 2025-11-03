@@ -2,7 +2,7 @@ import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
 
 function Checkout() {
-  let { cart, totalPrice, changeCount, removeFromCart } = useCart();
+  const { cart, totalPrice, changeCount, removeFromCart } = useCart();
 
   return (
     <div className="container">

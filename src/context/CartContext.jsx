@@ -1,11 +1,11 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import productsData from "../data/products.json";
 
-let CartContext = createContext();
+const CartContext = createContext();
 
-export let CartProvider = ({ children }) => {
-  let [products, setProducts] = useState(productsData);
-  let [cart, setCart] = useState(() => {
+export const CartProvider = ({ children }) => {
+  const [products, setProducts] = useState(productsData);
+  const [cart, setCart] = useState(() => {
     return JSON.parse(localStorage.getItem("cart")) || [];
   });
 
@@ -13,9 +13,9 @@ export let CartProvider = ({ children }) => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  let addToCart = (product) => {
+  const addToCart = (product) => {
     setCart((a) => {
-      let result = a.find((item) => item.id === product.id);
+      const result = a.find((item) => item.id === product.id);
       if (result) {
         return a.map((item) => {
           if (item.id === product.id) {
@@ -34,11 +34,11 @@ export let CartProvider = ({ children }) => {
     });
   };
 
-  let removeFromCart = (id) => {
+  const removeFromCart = (id) => {
     setCart((a) => a.filter((item) => item.id !== id));
   };
 
-  let changeCount = (id, action) => {
+  const changeCount = (id, action) => {
     setCart((a) =>
       a.map((item) => {
         if (item.id === id) {
@@ -52,11 +52,11 @@ export let CartProvider = ({ children }) => {
     );
   };
 
-  let totalPrice = cart.reduce(
+  const totalPrice = cart.reduce(
     (total, item) => total + item.price * item.count,
     0
   );
-  let totalCount = cart.reduce((total, item) => total + item.count, 0);
+  const totalCount = cart.reduce((total, item) => total + item.count, 0);
 
   return (
     <CartContext.Provider
@@ -75,4 +75,4 @@ export let CartProvider = ({ children }) => {
   );
 };
 
-export let useCart = () => useContext(CartContext);
+export const useCart = () => useContext(CartContext);
