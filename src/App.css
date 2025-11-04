@@ -110,20 +110,6 @@ h2 {
   background-color: green;
 }
 
-.remove-item {
-  background-color: #0056b3;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
-  margin-top: 5px;
-  border-radius: 3px;
-}
-
-.remove-item:hover {
-  background-color: #236dc8;
-}
-
 .cart-item {
   border: 1px solid #ddd;
   padding: 15px;

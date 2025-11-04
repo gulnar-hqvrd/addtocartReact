@@ -1,8 +1,8 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
+import { getApi, postApi } from "../http/api";
 
 const CartContext = createContext();
-const BASE_URL = "http://localhost:3000";
+
 
 export const CartProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
@@ -12,7 +12,7 @@ export const CartProvider = ({ children }) => {
 
 
   useEffect(() => {
-    axios.get(`${BASE_URL}/products`)
+    getApi(`products`)
       .then(res => setProducts(res.data))
       .catch(err => console.log(err));
   }, []);
@@ -24,9 +24,10 @@ export const CartProvider = ({ children }) => {
 
   const addNewProduct = async (newProduct) => {
     try {
-      const res = await axios.post(`${BASE_URL}/products`, newProduct);
-      setProducts((prev) => [...prev, res.data]);
-      alert("Əlavə olundu");
+      postApi(`products`, newProduct).then(()=>{
+           alert("Əlavə olundu");
+      })
+   
     } catch (err) {
       console.log(err);
     }
@@ -96,3 +97,5 @@ export const CartProvider = ({ children }) => {
 };
 
 export const useCart = () => useContext(CartContext);
+
+
